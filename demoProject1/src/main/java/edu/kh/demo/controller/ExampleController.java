@@ -33,7 +33,7 @@ public class ExampleController {
 		
 		// forward 하려는 html 파일 경로 return 작성
 		// 단, VeiwResolver가 제공하는 
-		// 타임리프의 저두사, 접미사 제외하고 작성
+		// 타임리프의 접두사, 접미사 제외하고 작성
 		
 		// 접두사 : classpath:/templates/
 		// 접미사 : .html
