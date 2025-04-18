@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="|${todo.todoNo}번 할 일 삭제|">Document</title>
+  <link rel="stylesheet" href="/css/delete.css">
+</head>
+<body>
+  <h1 th:text="|${todo.todoNo}번 할 일 삭제|"></h1>
+  <hr>
+
+  <form action="/todo/delete" method="path">
+  <div>
+    제목 : <input type="text" name="todoTitle" th:value="${todo.todoTitle}">
+  </div>
+
+  <div>
+  <textarea name="todoContent"
+  cols="50" rows="5" placeholder="상세 내용"
+  th:text="${todo.todoContent}"></textarea>
+  </div>
+
+<input type="hidden" name="todoNo" th:value="${todo.todoNo}">
+
+<button>삭제하기</button>
+</form>
+
+<th:block th:replace="~{common/footer}"></th:block>
+
+
+</body>
+</html>
