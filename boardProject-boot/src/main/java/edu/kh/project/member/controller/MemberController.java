@@ -113,7 +113,7 @@ public class MemberController {
 		
 		status.setComplete(); // 세션을 완료 시킴  (== @SessionAttributes 로 등록된 세션 제거)
 		
-		return "redirext:/";
+		return "redirect:/";
 	}
 	
 	/** 회원 가입 페이지로 이동
