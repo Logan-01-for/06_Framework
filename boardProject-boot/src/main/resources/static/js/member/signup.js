@@ -45,6 +45,12 @@ const emailMessage = document.querySelector("#emailMessage"); // span
 // 2) 이메일이 입력(input)될 때 마다 유효성 검사 수행
 memberEmail.addEventListener("input", (e) => {
 
+  //  이메일 인증 후 이메일이 변경된 경우
+  checkObj.authKey = false;
+  authKeyMessage.innerText = "";
+  clearInterval(authTimer);
+
+
   // 작성된 이메일 값 얻어오기
   const inputEamil = e.target.value;
 
@@ -111,6 +117,12 @@ memberEmail.addEventListener("input", (e) => {
 
 // 인증 번호 받기 버튼 클릭 시
 sendAuthKeyBtn.addEventListener("click", () => {
+
+  // 새로운 인증번호 발급을 원하는것이기 때문애
+  // 새로 발급받은 인증번호 확인 전까진 checkObj.authKey는 false
+  checkObj.authKey = false;
+  // 인증번호 발급 관련된 메시지 지우기ㄴ
+  authKeyMessage.innerText = "";
 
   // 중복되지 않은 유효한 이메일을 입력한 경우가 아니면
   if( !checkObj.memberEmail ){
@@ -185,3 +197,5 @@ function addZero(number) {
   if(number < 10) return "0" + number;
   else            return number;
 }
+
+// -------------------------------------------------------------------
