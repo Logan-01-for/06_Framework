@@ -1,3 +1,22 @@
+// -------------------- 주소 검색 이벤트 (submit 밖에 있어야 함) -------------------- //
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("✔ DOM 완전히 로드됨");
+  
+    const searchBtn = document.querySelector("#searchAddress");
+    console.log("✅ 검색 버튼 잡힘:", searchBtn);
+  
+    searchBtn?.addEventListener("click", () => {
+      console.log("🎯 검색 버튼 클릭됨");
+      new daum.Postcode({
+        oncomplete: function(data) {
+          document.getElementById("postcode").value = data.zonecode;
+          document.getElementById("address").value = data.roadAddress;
+        }
+      }).open();
+    });
+  });
+  
+
 /* 회원 정보 수정 페이지 */
 const updateInfo = document.querySelector("#updateInfo"); // form 태그
 
@@ -74,6 +93,7 @@ if(updateInfo != null) {
         // 입력을 안하면 전부 안해야되고
         // 입력하면 전부 해야된다
 
+
         const addr0 = memberAddress[0].value.trim().length == 0; // t/f
         const addr1 = memberAddress[1].value.trim().length == 0; // t/f
         const addr2 = memberAddress[2].value.trim().length == 0; // t/f
@@ -103,8 +123,7 @@ if(updateInfo != null) {
 
     });
 }
-
-
+  
 
 // ------------------------------------------
 
