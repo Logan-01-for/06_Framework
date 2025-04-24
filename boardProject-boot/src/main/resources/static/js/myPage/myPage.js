@@ -132,6 +132,7 @@ if(updateInfo != null) {
 // 비밀번호 변경 form 태그
 const changePw = document.querySelector("#changePw");
 
+// 현재 페이지에서 changePw 요소가 존재할때
 if(changePw != null) {
     // 제출 되었을 때
     changePw.addEventListener("submit", e => {
