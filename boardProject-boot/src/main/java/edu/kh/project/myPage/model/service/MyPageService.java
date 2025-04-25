@@ -48,6 +48,23 @@ public interface MyPageService {
 	 * @param memberNo
 	 * @return
 	 */
-	List<UploadFile> fileList(int memberNo);
+	List<UploadFile> fileList(int memberNo) throws Exception;
+
+	/** 여러파일 업로드 서비스
+	 * @param aaaList
+	 * @param bbbList
+	 * @param memberNo
+	 * @return
+	 */
+	int fileUpload3(List<MultipartFile> aaaList, 
+			List<MultipartFile> bbbList, 
+			int memberNo) throws Exception;
+
+	/**
+	 * @param profileImg
+	 * @param loginMember
+	 * @return
+	 */
+	int profile(MultipartFile profileImg, Member loginMember) throws Exception;
 
 }

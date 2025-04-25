@@ -12,9 +12,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import jakarta.servlet.MultipartConfigElement;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @PropertySource("classpath:/config.properties")
+@Slf4j
 public class FileConfig implements WebMvcConfigurer{
 	
 	// WebMvcConfigurer : Spring MVC 프레임워크에서 제공하는 인터페이스 중 하나로,
@@ -39,6 +41,14 @@ public class FileConfig implements WebMvcConfigurer{
 	
 	// -------------------------------------
 	
+	// 프로필 이미지 관련 경로
+	@Value("${my.profile.resource-handler}")
+	private String profileReourceHandler;
+	
+	@Value("${my.profile.resource-location}")
+	private String profileResourceLocation;
+	
+	
 	// 요청 주소에 따라
 	// 서버 컴퓨터의 어떤 경로에 접근할지 설정
 	@Override
@@ -57,8 +67,17 @@ public class FileConfig implements WebMvcConfigurer{
 		
 		//-> 클라이언트가 /myPage/file/** 패턴으로 이미지를 요청할 때
 		// 서버 폴더 경로 중 C:/uploadFiles/test/ 로 연결하겠다 (여기서 이미지 찾겠다)
+	
+		log.debug("profileReourceHandler: " + profileReourceHandler);
+		log.debug("profileResourceLocation: " + profileResourceLocation);
+		registry
+		.addResourceHandler(profileReourceHandler) // /myPage/file/**
+		.addResourceLocations(profileResourceLocation); // file:///C:/uploadFiles/test/
+		
 		
 	}
+	
+	
 	
 	// MultipartResolver 설정
 	@Bean
