@@ -118,7 +118,4 @@ public class FileConfig implements WebMvcConfigurer{
 		return multipartResolver;
 	}
 	
-	
-	
-	
 }
