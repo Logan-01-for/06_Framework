@@ -83,7 +83,9 @@ public class FileConfig implements WebMvcConfigurer{
 		.addResourceHandler(profileReourceHandler) // /myPage/file/**
 		.addResourceLocations(profileResourceLocation); // file:///C:/uploadFiles/test/
 		
-		
+		registry
+		.addResourceHandler(boardResourceHandler)
+		.addResourceLocations(boardResourceLocation);
 	}
 	
 	
