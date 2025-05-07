@@ -1,4 +1,4 @@
-package edu.kh.project.board.controller;
+package edu.kh.project.board.model.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -23,13 +23,13 @@ public interface EditBoardMapper {
 	 */
 	int insertUploadList(List<BoardImg> uploadList);
 
-	/** 게시글 수정
+	/** 게시글 부분(제목/내용) 수정
 	 * @param inputBoard
 	 * @return
 	 */
 	int boardUpdate(Board inputBoard);
 
-	/**게시글 이미지 삭제
+	/** 게시글 이미지 삭제
 	 * @param map
 	 * @return
 	 */
@@ -47,4 +47,15 @@ public interface EditBoardMapper {
 	 */
 	int insertImage(BoardImg img);
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

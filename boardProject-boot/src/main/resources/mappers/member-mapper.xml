@@ -14,7 +14,7 @@
    </select>
    
    <!-- 이메일 중복 검사 -->
-   <select id="checkEmail" resultType="int">
+   <select id="checkEmail" resultType="_int">
    	SELECT COUNT(*)
    	FROM "MEMBER"
    	WHERE MEMBER_EMAIL = #{memberEmail}
@@ -31,8 +31,8 @@
    
    <!-- 회원 가입 -->
    <insert id="signup">
-   INSERT INTO "MEMBER"
-VALUES(SEQ_MEMBER_NO.NEXTVAL, 
+   	INSERT INTO "MEMBER"
+	VALUES(SEQ_MEMBER_NO.NEXTVAL, 
 			 #{memberEmail},
 			 #{memberPw},
 			 #{memberNickname},
@@ -42,16 +42,8 @@ VALUES(SEQ_MEMBER_NO.NEXTVAL,
 			 DEFAULT,
 			 DEFAULT,
 			 DEFAULT
-)
-   
-   
+	)
    </insert>
-   
-   
-   
-   
-   
-   
    
    
    

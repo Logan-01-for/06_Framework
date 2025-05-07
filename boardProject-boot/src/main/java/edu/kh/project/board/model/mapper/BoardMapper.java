@@ -32,7 +32,7 @@ public interface BoardMapper {
 	 */
 	Board selectOne(Map<String, Integer> map);
 
-	/** 좋아요 해제 (DELTE)
+	/** 좋아요 해제 (DELETE)
 	 * @param map
 	 * @return
 	 */
@@ -61,5 +61,11 @@ public interface BoardMapper {
 	 * @return
 	 */
 	int selectReadCount(int boardNo);
+	
+	
+	
+	
+	
+	
 
 }

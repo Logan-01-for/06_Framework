@@ -1,4 +1,4 @@
-package edu.kh.project.board.controller;
+package edu.kh.project.board.model.service;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.kh.project.board.model.dto.Board;
 import edu.kh.project.board.model.dto.BoardImg;
+import edu.kh.project.board.model.mapper.EditBoardMapper;
 import edu.kh.project.common.util.Utility;
 
 

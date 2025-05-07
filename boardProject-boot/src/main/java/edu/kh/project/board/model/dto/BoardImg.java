@@ -19,6 +19,6 @@ public class BoardImg {
 	private int imgOrder;
 	private int boardNo;
 	
-	// 게시글 이미지 삽입/ 수정 할 때 사용
+	// 게시글 이미지 삽입/수정 할 때 사용
 	private MultipartFile uploadFile;
 }

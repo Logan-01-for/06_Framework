@@ -7,7 +7,7 @@ import edu.kh.project.board.model.dto.Board;
 
 public interface BoardService {
 
-	/** 게시판 종류 조회(Interceptor)
+	/** 게시판 종류 조회 서비스(Interceptor)
 	 * @return 
 	 */
 	List<Map<String, Object>> selectBoardTypeList();

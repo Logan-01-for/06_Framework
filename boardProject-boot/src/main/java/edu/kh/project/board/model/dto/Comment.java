@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Comment {
-
+	
 	private int commentNo;
 	private String commentContent;
-	private String commentWriterDate;
+	private String commentWriteDate;
 	private String commentDelFl;
 	private int boardNo;
 	private int memberNo;
@@ -24,7 +24,6 @@ public class Comment {
 	// 댓글 조회 시 회원 프로필, 닉네임
 	private String memberNickname;
 	private String profileImg;
-	
 	
 	
 }
