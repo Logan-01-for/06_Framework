@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="edu.kh.project.board.model.mapper.EditBoardMapper">
+<mapper namespace="edu.kh.project.board.controller.EditBoardMapper">
    
   	<!-- 
   			useGeneratedKeys 속성 : DB 내부적으로 생성한 키 (시퀀스)를
@@ -61,7 +61,7 @@
    		
    		<foreach collection="list" item="img" 
    		open="(" close=")" separator=" UNION ">
-   		SELECT NEXT_IMG_NO(), 
+   		SELECT NEXT_IMG_NO(),
    		#{img.imgPath}, 
    		#{img.imgOriginalName}, 
    		#{img.imgRename},
@@ -73,6 +73,45 @@
    
    
    </insert>
+   
+   <!-- 게시글 부분 수정 -->
+   <update id="boardUpdate">
+   	UPDATE "BOARD" SET
+   	BOARD_TITLE = #{boardTitle},
+   	BOARD_CONTENT = #{boardContent}
+   	WHERE BOARD_CODE = #{boardCode}
+   	AND BOARD_NO = #{boardNo}
+   	AND MEMBER_NO = #{memberNo}
+   </update>
+   
+   <!--  게시글 이미지 삭제 -->
+   <delete id="deleteImage">
+   		DELETE FROM "BOARD_IMG"
+   		WHERE BOARD_NO = #{boardNo}
+   		AND IMG_ORDER IN(${deleteOrderList})
+   </delete>
+   
+   <!-- 게시글 이미지 1행 수정 -->
+   <update id="updateImage">
+	   	UPDATE "BOARD_IMG" SET
+	   	IMG_ORIGINAL_NAME = #{imgOriginalName},
+	   	IMG_RENAME = #{imgRename}
+	   	WHERE BOARD_NO = #{boardNo}
+	   	AND IMG_ORDER = #{imgOrder}
+   </update>
+   
+   <!-- 게시글 이미지 1행 삽입 -->
+   <insert id="insertImage">
+   		INSERT INTO "BOARD_IMG"
+   		VALUES(NEXT_IMG_NO(), 
+   				#{imgPath},
+   				#{imgOriginalName},
+   				#{imgRename},
+   				#{imgOrder},
+   				#{boardNo})
+   </insert>
+   
+   
    
    
    

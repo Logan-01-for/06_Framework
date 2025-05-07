@@ -101,8 +101,8 @@ public class BoardController {
 						 @PathVariable("boardNo") int boardNo,
 						 Model model, 
 						 @SessionAttribute(value="loginMember", required = false) Member loginMember,
-						 RedirectAttributes ra,
-						 HttpServletRequest req, // 요청에 담긴 쿠키 얻어오기
+						 RedirectAttributes ra, 
+						 HttpServletRequest req,  // 요청에 담긴 쿠키 얻어오기
 						 HttpServletResponse resp // 새로운 쿠키 만들어서 응답하기
 						) {
 		
@@ -130,13 +130,12 @@ public class BoardController {
 			
 		} else {
 			
-			/*----------쿠키를 이용한 조회 수 증가 시작--------------*/
+			/*---------------- 쿠키를 이용한 조회 수 증가 시작-------------------*/
 			
 			// 비회원 또는 로그인한 회원의 글이 아닌 경우 ( == 글쓴이를 뺀 다른 사람 )
 			if(loginMember == null || 
-					loginMember.getMemberNo() !=board.getMemberNo() ) {
+					loginMember.getMemberNo() != board.getMemberNo()) {
 				
-						
 				// 요청에 담겨있는 모든 쿠키 얻어오기
 				Cookie[] cookies = req.getCookies();
 				
@@ -149,12 +148,12 @@ public class BoardController {
 						c = temp;
 						break;
 					}
-					
 				}
+				
 				
 				int result = 0; // 조회수 증가 결과를 저장할 변수
 				
-				// "readBoardNo" 가 쿠키에 없을 때
+				// "readBoardNo"가 쿠키에 없을 때
 				if(c == null) {
 					
 					// 새 쿠키 생성 ("readBoardNo", [게시글번호])
@@ -162,8 +161,8 @@ public class BoardController {
 					result = service.updateReadCount(boardNo);
 					
 				} else {
-				// "readBoardNo" 가 쿠키에 있을 때
-				// "readBoardNo" : [2][30][400] 
+				//	"readBoardNo"가 쿠키에 있을 때	
+				//  "readBoardNo" : [2][30][400]
 					
 				// 현재 게시글을 처음 읽는 경우
 					if(c.getValue().indexOf("[" + boardNo + "]") == -1) {
@@ -171,11 +170,10 @@ public class BoardController {
 						// 해당 글 번호를 쿠키에 누적 + 서비스 호출
 						c.setValue(c.getValue() + "[" + boardNo + "]");
 						result = service.updateReadCount(boardNo);
-					
 					}
-				
+					
 				}
-			
+				
 				// 조회 수 증가 성공 / 조회 성공 시
 				if(result > 0 ) {
 					
@@ -208,8 +206,9 @@ public class BoardController {
 				}
 				
 			}
+				
 			
-			/*----------쿠키를 이용한 조회 수 증가 끝--------------*/
+			/*---------------- 쿠키를 이용한 조회 수 증가 끝-------------------*/
 			
 			// 조회 결과가 있는 경우
 			path = "board/boardDetail"; // boardDetail.html로 forward
@@ -243,15 +242,18 @@ public class BoardController {
 		
 	}
 	
+	
 	/** 게시글 좋아요 체크/해제
 	 * @return
 	 */
 	@ResponseBody
-	@PostMapping("like") // /board/like(POST)
+	@PostMapping("like")  // /board/like (POST)
 	public int boardLike(@RequestBody Map<String, Integer> map) {
 		return service.boardLike(map);
-		
 	}
+	
+	
+	
 	
 	
 	
