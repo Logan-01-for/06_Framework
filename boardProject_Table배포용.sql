@@ -807,7 +807,10 @@ CREATE SEQUENCE SEQ_MESSAGE_NO NOCACHE;
 
 
 
-/* 로그인한 회원이 참여한 채팅방 목록 조회*/
+/* 로그인한 회원이 참여한 채팅방 목록 조회
+ * 
+ * 특정 사용자가 참여한 채팅방 목록, 각 채팅방의 최근 메세지, 관련된 정보 등 조회 목적
+ * */
 SELECT CHATTING_ROOM_NO
 	,(SELECT MESSAGE_CONTENT FROM 
 		(SELECT * FROM MESSAGE M2
