@@ -1,12 +1,15 @@
 package edu.kh.project.admin.controller;
 
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -110,6 +113,130 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
+	
+	
+	// ----------------- 복구 -------------------
+	
+	/** 탈퇴 회원 리스트 조회
+	 * @return
+	 */
+	@GetMapping("withdrawnMemberList")
+	public ResponseEntity<Object> selectWithdrawnMemberList() {
+		// 성공 시 List<Member> 반환, 실패 시 String 반환 -> Object 사용
+		try {
+			List<Member> withdrawnMemberList = service.selectWithdrawnMemberList();
+			return ResponseEntity.status(HttpStatus.OK).body(withdrawnMemberList);
+			
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("탈퇴한 회원 목록 조회 중 문제 발생 : " + e.getMessage());
+		}
+	} 
+	
+	
+	
+	/** 삭제된 게시글 리스트 조회
+	 * @return
+	 */
+	@GetMapping("deleteBoardList")
+	public ResponseEntity<Object> selectDeleteBoardList() {
+		// 성공 시 List<Board> 반환, 실패 시 String 반환 -> Object 사용
+		try {
+			List<Board> deleteBoardList = service.selectDeleteBoardList();
+			return ResponseEntity.status(HttpStatus.OK).body(deleteBoardList);
+			
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("삭제된 목록 조회 중 문제 발생 : " + e.getMessage());
+		}
+	} 
+	
+	/** 삭제된 회원 복구
+	 * @param member
+	 * @return
+	 */
+	@PutMapping("restoreMember")
+	public ResponseEntity<String> restoreMember(@RequestBody Member member) {
+		try {
+			
+			int result = service.restoreMember(member.getMemberNo());
+			
+			if(result > 0) {
+				return ResponseEntity.status(HttpStatus.OK)
+						.body(member.getMemberNo() + "번 회원 복구 완료");
+			} else {
+				// BAD_REQUEST : 400 -> 요청 구문이 잘못되었거나 유효하지 않음.
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body("유효하지 않음 memberNo : " + member.getMemberNo());
+			}
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("탈퇴 회원 복구 중 문제 발생 : " + e.getMessage());
+		}
+	}
+	
+	
+	
+	/** 삭제된 게시글 복구
+	 * @param member
+	 * @return
+	 */
+	@PutMapping("restoreBoard")
+	public ResponseEntity<String> restoreBoard(@RequestBody Board board) {
+		try {
+			
+			int result = service.restoreBoard(board.getBoardNo());
+			
+			if(result > 0) {
+				return ResponseEntity.status(HttpStatus.OK)
+						.body(board.getBoardNo() + "번 게시글 복구 완료");
+			} else {
+				// BAD_REQUEST : 400 -> 요청 구문이 잘못되었거나 유효하지 않음.
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body("유효하지 않음 boardNo : " + board.getBoardNo());
+			}
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("삭제된 게시글 복구 중 문제 발생 : " + e.getMessage());
+		}
+	}
+	
+	/** 관리자 계정 발급
+	 * @param member
+	 * @return
+	 */
+	@PostMapping("createAdminAccount")
+	public ResponseEntity<String> createAdminAccount(@RequestBody Member member) {
+		try {
+			
+			// 1. 기존에 있는 이메일인지 검사
+			int checkEmail = service.checkEmail(member.getMemberEmail());
+			
+			// 2. 있으면 발급 안함
+			if(checkEmail > 0) {
+				// HttpStatus.CONFLICT (409) : 요청이 서버의 현재 상태와 충돌할 때 사용
+				// == 이미 존재하는 리소스 (email) 때문에 새로운 리소스를 만들 수 없다.
+				return ResponseEntity.status(HttpStatus.CONFLICT)
+						.body("이미 사용중인 이메일 입니다.");
+			}
+			
+			// 3. 없으면 새로 발급 
+			String accountPw = service.createAdminAccount(member);
+			
+			// HttpStatus.OK (200) : 요청이 정상적으로 처리되었으나 기존 리소스에 대한 단순 처리
+			// HttpStatus.CREATED (201) : 자원이 성공적으로 생성 되었음을 나타냄
+			return ResponseEntity.status(HttpStatus.CREATED).body(accountPw);
+			
+		} catch (Exception e) {
+			log.debug("err {}" ,e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
+					.body("관리자 계정 생성중 문제 발생(서버 문의 바람)");
+		}
+	}
+	
+	
 	
 	
 	
