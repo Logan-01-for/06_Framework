@@ -10,12 +10,12 @@ import edu.kh.project.member.model.dto.Member;
 @Mapper
 public interface AdminMapper {
 
-	/**
+	/** 회원 탈퇴 취소 리스트 조회
 	 * 
 	 */
 	List<Member> selectWithdrawnMemberList = null;
 	
-	/**
+	/** 삭제된 게시글 리스트 조회
 	 * 
 	 */
 	List<Board> selectDeleteBoardList = null;
