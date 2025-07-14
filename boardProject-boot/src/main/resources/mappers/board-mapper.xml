@@ -209,18 +209,19 @@
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
-	<!-- 
+	<!--  
 		동적 SQL : <choose> <when> <otherwise>
-		
+	
 		<choose> : 조건문을 작성할 영역 지정
-			내부에  <when> <otherwise> 태그 작성 가능
-		
+		 	내부에 <when> <otherwise> 태그 작성 가능
+		 	
 		<when> : if, else if 역할의 태그
-			- test 속성 : 조건식 작성하는 속성
+			-	test 속성 : 조건식 작성하는 속성
 			
 		<otherwise> : else 역할의 태그
 	
 	 -->
+	
 	<!-- 검색 조건이 맞는 게시글 수 조회 -->
 	<select id="getSearchCount">
 		SELECT COUNT(*)
@@ -265,6 +266,7 @@
 	</select>
 	
 	
+	
 	<select id="selectSearchList">
 		SELECT BOARD_NO, BOARD_TITLE, READ_COUNT, MEMBER_NICKNAME,
 		(SELECT
@@ -292,11 +294,10 @@
 
 		FROM "BOARD" B
 		JOIN "MEMBER" M ON(B.MEMBER_NO = M.MEMBER_NO)
-		WHERE
-		BOARD_DEL_FL = 'N'
+		WHERE BOARD_DEL_FL = 'N'
 		AND BOARD_CODE = #{boardCode}
 		
-			<choose>
+		<choose>
 			<!-- 제목 검색 (key 값 "t" 인 경우) -->
 			<when test='key == "t"'>
 				AND BOARD_TITLE LIKE '%'|| #{query} ||'%'
@@ -323,27 +324,18 @@
 			
 		</choose>
 		
-		
 		ORDER BY BOARD_NO DESC
 	</select>
 	
 	<!-- DB 이미지 파일명 목록 조회 -->
 	<select id="selectDbImageList">
-		SELECT SUBSTR(PROFILE_IMG, 
-		INSTR(PROFILE_IMG, '/', -1 +1)) AS "rename"
+		SELECT SUBSTR(PROFILE_IMG, INSTR(PROFILE_IMG, '/', -1) + 1) AS "rename"
 		FROM "MEMBER"
 		WHERE PROFILE_IMG IS NOT NULL
-		UNION 
+		UNION
 		SELECT CAST(IMG_RENAME AS VARCHAR2(300)) "rename"
 		FROM "BOARD_IMG"
 	</select>
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
